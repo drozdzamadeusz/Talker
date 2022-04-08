@@ -1,6 +1,7 @@
 ﻿using talker.Application.Common.Models;
 using System.Threading.Tasks;
 using talker.Application.Users.Queries;
+using System.Collections.Generic;
 
 namespace talker.Application.Common.Interfaces
 {
@@ -17,5 +18,9 @@ namespace talker.Application.Common.Interfaces
         Task<Result> DeleteUserAsync(string userId);
 
         Task<ApplicationUserDto> GetUserAsync(string userId);
+
+        Task<List<ApplicationUserDto>> GetUsersAsync(List<string> userIds);
+
+        Task<List<ApplicationUserDto>> FindUsersAsync(string userName, string firstName, string lastName);
     }
 }

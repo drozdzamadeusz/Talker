@@ -7,6 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using talker.Application.Users.Queries;
+using System.Collections.Generic;
+using AutoMapper.QueryableExtensions;
 
 namespace talker.Infrastructure.Identity
 {
@@ -15,15 +17,14 @@ namespace talker.Infrastructure.Identity
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserClaimsPrincipalFactory<ApplicationUser> _userClaimsPrincipalFactory;
         private readonly IAuthorizationService _authorizationService;
+        private readonly IMapper _mapper;
 
-        public IdentityService(
-            UserManager<ApplicationUser> userManager,
-            IUserClaimsPrincipalFactory<ApplicationUser> userClaimsPrincipalFactory,
-            IAuthorizationService authorizationService)
+        public IdentityService(UserManager<ApplicationUser> userManager, IUserClaimsPrincipalFactory<ApplicationUser> userClaimsPrincipalFactory, IAuthorizationService authorizationService, IMapper mapper)
         {
             _userManager = userManager;
             _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
             _authorizationService = authorizationService;
+            _mapper = mapper;
         }
 
         public async Task<string> GetUserNameAsync(string userId)
@@ -90,6 +91,39 @@ namespace talker.Infrastructure.Identity
             var mapper = new Mapper(new MapperConfiguration(c => c.CreateMap<ApplicationUser, ApplicationUserDto>()));
 
             return mapper.Map<ApplicationUserDto>(user);
+        }
+
+        public async Task<List<ApplicationUserDto>> GetUsersAsync(List<string> userIds)
+        {
+            var configuration = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<ApplicationUser, ApplicationUserDto>();
+            });
+
+            return await _userManager.Users.Where(u => userIds.Contains(u.Id)).ProjectTo<ApplicationUserDto>(configuration).ToListAsync();
+        }
+
+        public async Task<List<ApplicationUserDto>> FindUsersAsync(string userName, string firstName, string lastName)
+        {
+
+
+            List<ApplicationUserDto> users;
+
+            if (string.IsNullOrEmpty(userName) && string.IsNullOrEmpty(lastName)){
+                users = await _userManager.Users.Where(u => u.UserName.Contains(firstName) ||
+                                                            u.FirstName.Contains(firstName) ||
+                                                            u.LastName.Contains(firstName))
+                                   .ProjectTo<ApplicationUserDto>(new MapperConfiguration(c => c.CreateMap<ApplicationUser, ApplicationUserDto>()))
+                                   .ToListAsync();
+            }
+            else {
+                users = await _userManager.Users.Where(u => (string.IsNullOrEmpty(userName) || u.UserName.Contains(userName)) &&
+                                                             (string.IsNullOrEmpty(firstName) || u.FirstName.Contains(firstName)) &&
+                                                             (string.IsNullOrEmpty(lastName) || u.LastName.Contains(lastName)))
+                                   .ProjectTo<ApplicationUserDto>(new MapperConfiguration(c => c.CreateMap<ApplicationUser, ApplicationUserDto>()))
+                                   .ToListAsync();
+            }
+            return users;
         }
     }
 }

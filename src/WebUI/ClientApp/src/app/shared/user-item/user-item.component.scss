@@ -1,0 +1,64 @@
+@import "variables";
+
+:host{
+    display: flex;
+    flex: 2 0 100%;
+    width: 100%;
+}
+
+.user-panel-container{
+    display: flex;
+    justify-content: end;
+    position: relative;
+    flex-direction: row;
+    flex: 2 0 100%;
+    transition: color 0.5s ease-out;
+    transition: background 0.3s ease-out;
+    border-radius: $theme-radius;
+    padding: 0.4rem;
+    height: 55px;
+
+    &:hover {
+        background: #e2e2e2;
+        cursor: pointer;
+    }
+
+    .user-avatar {
+        padding-right: 0.5rem;
+        display: flex;
+    }
+    .user-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        flex-grow: 2;
+        padding-top: 0.05rem;
+
+        .user-nick{
+            &-text {
+                display: block;
+                font-size: 14px;
+                padding-bottom: 2px;
+                font-weight: 500;
+            }
+        }
+
+        .user-description {
+            display: flex;
+            flex-direction: column;
+
+            font-size: 11px;
+            padding-bottom: 2px;
+            color: #606060;
+            width: 100%;
+            position: relative;
+
+
+            &-text {
+                font-weight: 600;
+                white-space: nowrap;
+            }
+        }
+    }
+}

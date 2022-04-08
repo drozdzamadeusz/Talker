@@ -15,6 +15,14 @@ using Microsoft.Extensions.Hosting;
 using NSwag;
 using NSwag.Generation.Processors.Security;
 using System.Linq;
+using System;
+using talker.WebUI.Hubs;
+using Microsoft.AspNetCore.Http.Connections;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using talker.WebUI.EmailService;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace talker.WebUI
 {
@@ -30,8 +38,21 @@ namespace talker.WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplicationInsightsTelemetry();
+
             services.AddApplication();
+
             services.AddInfrastructure(Configuration);
+
+            services.AddTransient<IEmailSender, EmailSender>();
+
+            services.TryAddEnumerable(
+                ServiceDescriptor.Singleton<IPostConfigureOptions<JwtBearerOptions>, ConfigureJwtBearerOptions>());
+
+            services.AddSignalR(hubOptions =>
+            {
+                hubOptions.EnableDetailedErrors = true;
+            });
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -62,17 +83,41 @@ namespace talker.WebUI
 
             services.AddOpenApiDocument(configure =>
             {
-                configure.Title = "talker API";
+                configure.Title = "Talker API";
                 configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
                 {
                     Type = OpenApiSecuritySchemeType.ApiKey,
                     Name = "Authorization",
                     In = OpenApiSecurityApiKeyLocation.Header,
-                    Description = "Type into the textbox: Bearer {your JWT token}."
+                    Description = "Open <a href=\"../token\" target=\"_blank\">token page<a/> to get valid JWT token</br></br>Type into the textbox: Bearer {your JWT token}.</br>"
                 });
 
                 configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
             });
+        }
+
+        public class ConfigureJwtBearerOptions : IPostConfigureOptions<JwtBearerOptions>
+        {
+            public void PostConfigure(string name, JwtBearerOptions options)
+            {
+                var originalOnMessageReceived = options.Events.OnMessageReceived;
+                options.Events.OnMessageReceived = async context =>
+                {
+                    await originalOnMessageReceived(context);
+
+                    if (string.IsNullOrEmpty(context.Token))
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+                        var path = context.HttpContext.Request.Path;
+
+                        if (!string.IsNullOrEmpty(accessToken) &&
+                            path.StartsWithSegments("/update"))
+                        {
+                            context.Token = accessToken;
+                        }
+                    }
+                };
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -98,6 +143,7 @@ namespace talker.WebUI
                 app.UseSpaStaticFiles();
             }
 
+
             app.UseSwaggerUi3(settings =>
             {
                 settings.Path = "/api";
@@ -106,11 +152,20 @@ namespace talker.WebUI
 
             app.UseRouting();
 
+
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<UpdateHub>("/update", options =>
+                {
+                    options.Transports =
+                        HttpTransportType.WebSockets |
+                        HttpTransportType.ServerSentEvents |
+                        HttpTransportType.LongPolling;
+                });
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");

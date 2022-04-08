@@ -1,0 +1,8 @@
+<div class="user-select-item" *ngIf="user">
+    <div class="user-select-text">
+        <span>{{user.firstName}} {{user.lastName}}</span>
+    </div>
+    <div class="user-select-control" (click)="onItemClick()" *ngIf="controls === true">
+        <i class="fas fa-times"></i>
+    </div>
+</div>

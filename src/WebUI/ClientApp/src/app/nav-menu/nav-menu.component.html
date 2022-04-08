@@ -9,7 +9,7 @@
     "
   >
     <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">talker.WebUI</a>
+      <a class="navbar-brand" [routerLink]="['/']">Talker dev</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -32,16 +32,11 @@
             [routerLinkActive]="['link-active']"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
+            <a class="nav-link text-dark" [routerLink]="['/start']">Home</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/counter']"
-              >Counter</a
-            >
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/fetch-data']"
-              >Fetch data</a
+            <a class="nav-link text-dark" [routerLink]="['/new-conversation']"
+              >New conversation</a
             >
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">

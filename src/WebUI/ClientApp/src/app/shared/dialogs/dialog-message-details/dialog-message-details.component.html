@@ -1,0 +1,24 @@
+<div *ngIf="message">
+  <div mat-dialog-content class="dialog-content">
+    <p class="content"><span *ngIf="creator" class="wrote-by"
+      >{{creator.firstName}} {{creator.lastName}}: </span><span class="content-text">{{message.content}}</span></p>
+    <p class="created">{{message.created | date: 'MMM d, y, h:mm:ss a'}}</p>
+    <div class="users" *ngIf="users && users.length > 0">
+      <p class="seen-by">Seen by:</p>
+      <ng-container *ngFor="let u of users">
+        <app-user-item
+            [userId]='u.id'
+            [pictureUrl]='u.pictureUrl'
+            text="{{u.firstName}} {{u.lastName}}"
+            description="{{u.created | date: 'MMM d, y, h:mm:ss a'}}"
+        ></app-user-item>
+      </ng-container>
+    </div>
+    <p class="seen-by" *ngIf="users.length < 1">No one has seen this message</p>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button class="button secondary" style="width: 5rem;" mat-button mat-dialog-close (click)="onClose()"
+    >Close</button>
+    <button class="button primary" style="width: 5rem;" mat-button (click)="copyToClipboard()" tabIndex="-1">Copy</button>
+  </div>
+</div>

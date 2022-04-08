@@ -1,5 +1,4 @@
 ﻿using talker.Application.Common.Interfaces;
-using talker.Infrastructure.Files;
 using talker.Infrastructure.Identity;
 using talker.Infrastructure.Persistence;
 using talker.Infrastructure.Services;
@@ -35,14 +34,28 @@ namespace talker.Infrastructure
             services
                 .AddDefaultIdentity<ApplicationUser>()
                 .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders()
+                .AddDefaultUI();
 
-            services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+            services.AddIdentityServer(options =>
+            {
+                //options.IssuerUri = "https://talker.ninja"; // comment if development
+
+            }).AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+
+
+            services.Configure<IdentityOptions>(options =>
+            {
+
+                options.Password.RequiredLength = 6;
+                options.SignIn.RequireConfirmedEmail = true;
+                options.User.RequireUniqueEmail = true;
+                options.SignIn.RequireConfirmedAccount = true;
+            });
 
             services.AddTransient<IDateTime, DateTimeService>();
             services.AddTransient<IIdentityService, IdentityService>();
-            services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();

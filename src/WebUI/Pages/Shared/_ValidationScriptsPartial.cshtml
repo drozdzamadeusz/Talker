@@ -1,4 +1,24 @@
-﻿<environment include="Development">
+﻿<script>
+    jQuery.fn.extend({
+      checkFloatingPlaceholder: function() {
+        return this.each(function() {
+            let $this = $(this);
+            if($this.val() != ''){
+                $this.closest("div").find("label").addClass("hide");
+            }else{
+                $this.closest("div").find("label").removeClass("hide");
+            }
+        });
+      }
+    });
+    $(".float-label input").blur(function(){
+        $(this).checkFloatingPlaceholder();
+    });
+    $(document).ready(function() {
+        $(".float-label input").checkFloatingPlaceholder();
+    });
+</script>
+<environment include="Development">
     <script src="~/Identity/lib/jquery-validation/dist/jquery.validate.js"></script>
     <script src="~/Identity/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 </environment>
@@ -14,5 +34,8 @@
             asp-fallback-test="window.jQuery && window.jQuery.validator && window.jQuery.validator.unobtrusive"
             crossorigin="anonymous"
             integrity="sha384-ifv0TYDWxBHzvAk2Z0n8R434FL1Rlv/Av18DXE43N/1rvHyOG4izKst0f2iSLdds">
+    </script>
+    <script>
+        !function(h,p,v){var y=h.location,T="script",S="instrumentationKey",k="ingestionendpoint",D="disableExceptionTracking",C="ai.device.",b="toLowerCase",I="crossOrigin",w="POST",e="appInsightsSDK",t=v.name||"appInsights";(v.name||h[e])&&(h[e]=t);var n=h[t]||function(u){var l=!1,d=!1,g={initialize:!0,queue:[],sv:"5",version:2,config:u};function f(e,t){var n={},a="Browser";return n[C+"id"]=a[b](),n[C+"type"]=a,n["ai.operation.name"]=y&&y.pathname||"_unknown_",n["ai.internal.sdkVersion"]="javascript:snippet_"+(g.sv||g.version),{time:(a=new Date).getUTCFullYear()+"-"+i(1+a.getUTCMonth())+"-"+i(a.getUTCDate())+"T"+i(a.getUTCHours())+":"+i(a.getUTCMinutes())+":"+i(a.getUTCSeconds())+"."+((a.getUTCMilliseconds()/1e3).toFixed(3)+"").slice(2,5)+"Z",iKey:e,name:"Microsoft.ApplicationInsights."+e.replace(/-/g,"")+"."+t,sampleRate:100,tags:n,data:{baseData:{ver:2}}};function i(e){e=""+e;return 1===e.length&&(e="0"+e),e}}var e,m=u.url||v.src;function a(e){var t,n,a,i,o,r,s,c,p;l=!0,g.queue=[],d||(d=!0,s=m,i=function(){var e,t={},n=u.connectionString;if(n)for(var a=n.split(";"),i=0;i<a.length;i++){var o=a[i].split("=");2===o.length&&(t[o[0][b]()]=o[1])}return t[k]||(n=(e=t.endpointsuffix)?t.location:null,t[k]="https://"+(n?n+".":"")+"dc."+(e||"services.visualstudio.com")),t}(),o=i[S]||u[S]||"",p=(r=i[k])?r+"/v2/track":u.endpointUrl,(c=[]).push((t="SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details)",n=s,a=p,(r=(i=f(o,"Exception")).data).baseType="ExceptionData",r.baseData.exceptions=[{typeName:"SDKLoadFailed",message:t.replace(/\./g,"-"),hasFullStack:!1,stack:t+"\nSnippet failed to load ["+n+"] -- Telemetry is disabled\nHelp Link: https://go.microsoft.com/fwlink/?linkid=2128109\nHost: "+(y&&y.pathname||"_unknown_")+"\nEndpoint: "+a,parsedStack:[]}],i)),c.push(function(e,t){var n=f(o,"Message"),a=n.data;a.baseType="MessageData";a=a.baseData;return a.message='AI (Internal): 99 message:"'+("SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details) ("+e+")").replace(/\"/g,"")+'"',a.properties={endpoint:t},n}(s,p)),s=c,c=p,JSON&&((p=h.fetch)&&!v.useXhr?p(c,{method:w,body:JSON.stringify(s),mode:"cors"}):XMLHttpRequest&&((p=new XMLHttpRequest).open(w,c),p.setRequestHeader("Content-type","application/json"),p.send(JSON.stringify(s)))))}function i(e,t){d||setTimeout(function(){!t&&g.core||a()},500)}m&&(e=function(){var n=p.createElement(T);n.src=m;var e=v[I];return!e&&""!==e||"undefined"==n[I]||(n[I]=e),n.onload=i,n.onerror=a,n.onreadystatechange=function(e,t){"loaded"!==n.readyState&&"complete"!==n.readyState||i(0,t)},n}(),v.ld<0?p.getElementsByTagName("head")[0].appendChild(e):setTimeout(function(){p.getElementsByTagName(T)[0].parentNode.appendChild(e)},v.ld||0));try{g.cookie=p.cookie}catch(e){}function t(e){for(;e.length;)!function(t){g[t]=function(){var e=arguments;l||g.queue.push(function(){g[t].apply(g,e)})}}(e.pop())}var n="track",o="TrackPage",r="TrackEvent";t([n+"Event",n+"PageView",n+"Exception",n+"Trace",n+"DependencyData",n+"Metric",n+"PageViewPerformance","start"+o,"stop"+o,"start"+r,"stop"+r,"addTelemetryInitializer","setAuthenticatedUserContext","clearAuthenticatedUserContext","flush"]),g.SeverityLevel={Verbose:0,Information:1,Warning:2,Error:3,Critical:4};var s,c,r=(u.extensionConfig||{}).ApplicationInsightsAnalytics||{};return!0!==u[D]&&!0!==r[D]&&(t(["_"+(s="onerror")]),c=h[s],h[s]=function(e,t,n,a,i){var o=c&&c(e,t,n,a,i);return!0!==o&&g["_"+s]({message:e,url:t,lineNumber:n,columnNumber:a,error:i}),o},u.autoExceptionInstrumented=!0),g}(v.cfg);function a(){v.onInit&&v.onInit(n)}(h[t]=n).queue&&0===n.queue.length?(n.queue.push(a),n.trackPageView({})):a()}(window,document,{src:"https://js.monitor.azure.com/scripts/b/ai.2.min.js",crossOrigin:"anonymous",cfg:{instrumentationKey:"6dc03dc3-2b67-4c99-906c-fd3951c19eb1"}});
     </script>
 </environment>

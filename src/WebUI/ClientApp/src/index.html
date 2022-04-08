@@ -7,8 +7,21 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  </head>
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        .loading-spinner{display:flex}.loading-spinner-animation{display:inline-block;width:3.4rem;height:3.4rem}.loading-spinner-animation:after{content:" ";display:block;width:2rem;height:2rem;margin:.5rem;border-radius:50%;border:.23rem solid #6a7dfe;border-color:#6a7dfe transparent #6a7dfe transparent;animation:loading-animation 1.2s linear infinite}.loading-spinner-text{display:flex;align-items:center;margin-left:.5rem;min-width:5rem;white-space: nowrap}.loading-spinner-text span{font-weight:600}.loading-spinner-text span:after{overflow:hidden;display:inline-block;vertical-align:bottom;animation:ellipsis steps(4,end) .8s infinite;content:"…";width:0}@keyframes loading-animation{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}@keyframes ellipsis{to{width:.8rem}}@-webkit-keyframes ellipsis{to{width:.8rem}}
+    </style>
+</head>
   <body>
-    <app-root>Loading...</app-root>
+    <app-root>
+        <div class="loading-spinner">
+            <div class="loading-spinner-animation"></div>
+            <div class="loading-spinner-text">
+                <span class="loading">Loading</span>
+            </div>
+        </div>
+    </app-root>
   </body>
 </html>

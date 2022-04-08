@@ -14,7 +14,7 @@ namespace talker.Application.Conversations.Commands.CreateConversation
     {
 
         public string Name { get; set; }
-        public List<UeserIdRequestDto> UsersIds { get; set; }
+        public List<UeserIdDto> UsersIds { get; set; }
 
         public class CreateConversationCommandHandler : IRequestHandler<CreateConversationCommand, int>
         {
@@ -45,11 +45,11 @@ namespace talker.Application.Conversations.Commands.CreateConversation
                     throw new ForbiddenAccessException();
                 }
 
-                var userIds = new List<UserDictionary>();
+                var userIds = new List<UserConversation>();
 
                 request.UsersIds.ForEach(u =>
                 {
-                    userIds.Add(new UserDictionary
+                    userIds.Add(new UserConversation
                     {
                         UserId = u.UserId
                     });
@@ -57,11 +57,13 @@ namespace talker.Application.Conversations.Commands.CreateConversation
 
                 if (request.UsersIds.Where(u => u.UserId == userId).Count() <= 0)
                 {
-                    userIds.Add(new UserDictionary
+                    userIds.Add(new UserConversation
                     {
                         UserId = userId
                     });
                 }
+
+                userIds.Where(u => u.UserId == userId).SingleOrDefault().Role = Domain.Enums.ConversationRole.Creator;
 
                 var entity = new Conversation
                 {

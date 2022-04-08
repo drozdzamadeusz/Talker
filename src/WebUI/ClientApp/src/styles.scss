@@ -1,16 +1,260 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* Provide sufficient contrast against white background */
+@import "variables";
+
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/regular.scss";
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+html,
+body {
+    height: 100%;
+}
+
+html {
+    margin-left: calc(100vw - 100%);
+    margin-right: 0;
+}
+
+body {
+    display: flex;
+    justify-content: flex-start;
+    background-color: #e2e2e2;
+    background-color: #b0b0b0;
+    font-family: $theme-font !important;
+    margin: 0;
+    padding: 0;
+    color: $theme-font-color;
+    padding: 3rem;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+input,
+button {
+    font-family: $theme-font;
+    font-weight: 500;
+}
+
+//Main containers
+
+.page {
+    width: 26rem;
+    height: 100%;
+    transition: $theme-transition;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-color: $theme-item-background-color;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    margin-bottom: 0.4rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.item:not(.item-window) {
+    max-width: calc(100% - 1rem);
+}
+
+// End of Main containers
+
+// Buttons
+
+button {
+    outline: none;
+    border: 0.12rem $theme-color solid;
+    border-radius: $theme-radius;
+    padding: 6px;
+    cursor: pointer;
+    background-color: $theme-item-background-color;
+    margin: 0.5rem;
+    box-shadow: $theme-shadow;
+    color: $theme-font-color;
+    transition: $theme-transition;
+    font-weight: 500;
+    font-size: 0.8rem;
+
+    &.button-full-width {
+        width: 90% !important;
+    }
+
+    &:hover {
+        transition: $theme-transition;
+        background-color: $theme-color;
+    }
+
+    &.primary {
+        background-color: $theme-color;
+        color: #fff;
+        border: none;
+        padding: calc(0.12rem + 6px);
+
+        &:hover {
+            transition: $theme-transition;
+            background-color: #25306d;
+        }
+    }
+
+    &.secondary {
+        border-color: rgba(128, 162, 255, 0.3);
+
+        &:hover {
+            background-color: rgba(128, 162, 255, 0.3);
+        }
+    }
+
+    &.alert {
+        border-color: rgba(255, 128, 128, 0.3);
+        color: #b53f3f;
+        font-weight: 600;
+
+        &:hover {
+            background-color: rgba(255, 128, 128, 0.31);
+        }
+    }
+}
+
+//Input
+
+input:not([type="radio"]) {
+    border-radius: 0.4rem;
+    border-radius: 50rem;
+    border-width: 1px;
+    padding: 0.3rem 0.8rem;
+    font-weight: 500;
+    width: 100%;
+    flex: 2 0 100%;
+
+    border: none;
+    box-shadow: 0 0 0 1px rgba(128, 162, 255, 0.3);
+    transition: $theme-transition;
+    outline: none;
+
+    &::placeholder {
+        font-size: 0.85rem;
+        font-family: $theme-font;
+    }
+
+    &:focus {
+        transition: $theme-transition;
+        box-shadow: 0 0 0 2px rgba(128, 162, 255, 0.3);
+        border: none;
+
+        &::placeholder {
+            color: transparent;
+            font-family: $theme-font;
+        }
+    }
+}
+
+//End of Input
+
+// Href
+
 a {
-  color: #0366d6;
+    cursor: pointer;
+    color: $theme-color;
+    // color: rgb(128, 162, 255)!important;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
 }
 
-code {
-  color: #e01a76;
+a:hover {
+    // background: $theme-hover-background;
+    // -webkit-background-clip: text;
+    // -webkit-text-fill-color: transparent;
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+.colorful-separator {
+    background: $theme-hover-background;
+    min-height: 2px;
+    width: 100%;
+}
+
+input:focus::placeholder {
+    color: transparent;
+}
+
+// Window
+
+app-window [body] {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+// End of window
+
+//Material fixes
+
+.mat-dialog-content.dialog-content {
+    // overflow: inherit!important;
+}
+
+.mat-dialog-actions {
+    margin-bottom: -8px !important;
+}
+
+.mat-dialog-content {
+    max-height: inherit!important;
+}
+
+//End of Material fixes
+
+.inform {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #666;
+    margin: 0.5rem 0.5rem 0.2rem 0.5rem;
+}
+
+// Themes
+
+@each $key, $val in $theme-background-list {
+    .bg-#{$key} {
+        background: #{$val};
+    }
+}
+
+@each $key, $val in $theme-background-single-list {
+    .bg-#{$key}-single {
+        background: #{$val};
+        color: #{$val};
+    }
+}
+
+@media only screen and (max-width: 440px) {
+    body {
+        padding: 0;
+    }
+
+    .page {
+        width: 100vw;
+    }
+
+    .item:not(.item-window) {
+        max-width: 100%;
+    }
 }

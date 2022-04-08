@@ -1,0 +1,15 @@
+<h5 mat-dialog-title>Change conversation color</h5>
+<form (submit)="onSave()" action="#">
+    <div mat-dialog-content class="dialog-content" *ngIf="colors">
+        <div *ngFor="let c of colors"
+            class="color {{c.color | toThemeClassColor}}"
+            title={{c.name}}
+            [ngClass]="{'active': c.id === data.selectedId}"
+            (click)="onChangeActive(c.id)"></div>
+    </div>
+    <div mat-dialog-actions align="end">
+        <button class="button secondary" style="width: 5rem;" mat-button mat-dialog-close (click)="onClose()"
+            tabIndex="-1">Close</button>
+        <button class="button primary" style="width: 5rem;" type="submit" mat-button (click)="onSave()">Save</button>
+    </div>
+</form>

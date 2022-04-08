@@ -1,0 +1,30 @@
+.item{
+    flex-direction: column;
+}
+
+.item-conversations {
+    display: block;
+    padding-top: 1.2rem;
+    padding-bottom: 1rem;
+    overflow-y: auto;
+
+    .input-contrainer{
+        padding: 0;
+
+        span{
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #666;
+            margin: 0.5rem 0.5rem 0 0.5rem;
+        }
+    }
+}
+
+.checked-items{
+    flex-direction: row;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 0 0.8rem 0;
+}

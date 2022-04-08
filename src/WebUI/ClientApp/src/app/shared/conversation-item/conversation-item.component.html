@@ -1,0 +1,32 @@
+<div class="user-panel-container" (click)='onItemClick()'  [ngClass]="{'container-active': showOptions}">
+    <div class="user-avatar">
+       <app-avatar
+            width="55"
+            height="55"
+            [pics]="pics"
+        ></app-avatar>
+    </div>
+    <div class="user-info" [ngClass]="{'unseen-messages': unseenMessages}">
+        <div class="user-nick">
+            <span class="user-nick-text">{{title}}</span>
+        </div>
+        <div class="user-description" id="main-user-description">
+            <span *ngIf="lastMessageTime && lastMessage"
+                class="user-description-text"
+                id="user-description-text"
+                >{{dateFormatted}} &bull; {{displayName}} &bull; {{lastMessage}}</span>
+        </div>
+    </div>
+    <app-mouse-menu
+        [options]="optionsItems"
+        (onMenuShown)="onMenuShown($event)"
+        (onOpionClicked)="onMenuOptionClick($event)">
+            <i class="fas fa-chevron-down menu-mouse-button"></i>
+    </app-mouse-menu>
+    <div class="new-messages" *ngIf="unseenMessages > 0">
+        <div class="new-messages">
+        <div class="new-content">
+            <span>{{unseenFormatted}}</span>
+        </div>
+    </div>
+</div>

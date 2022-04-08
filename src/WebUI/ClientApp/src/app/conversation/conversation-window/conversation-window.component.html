@@ -1,0 +1,49 @@
+<ng-container *ngIf="conversation && windowHandler">
+    <app-window 
+    [windowHandler]="windowHandler">
+        <div header>
+            <app-conversation-header *ngIf="users"
+                [text]='conversation.name'
+                [pics]='users | userListPicsArray:currentUserId'
+            ></app-conversation-header>
+        </div>
+        <div extra-nav>
+            <a id="button-mi"
+                class="window-button"
+                ><app-mouse-menu
+                    [options]="optionsItems"
+                    (onOpionClicked)="onMenuOptionClick($event)"
+                >
+                <i class="fas fa-chevron-down conv-menu-button"></i>
+                </app-mouse-menu>
+            </a>
+        </div>
+        <div body>
+            <div class="messages-container">
+                <app-messages
+                    [color]='conversation.color'
+                    [conversationId]='conversation.id'
+                    (windowStateChanged)="onWindowStateChanged($event)">
+                </app-messages>
+            </div>
+            <div class="item-write">
+                <div class="colorful-separator" [ngClass]="conversation.color | toThemeClassColor:'-single'"></div>
+                <div class="controls chat-controls">
+                    <div class="chat-textarea">
+                        <textarea
+                            [(ngModel)]='textareaVal'
+                            (keydown)="onTextareaKeydown($event)"
+                            placeholder="Enter your message here..."
+                            rows="3"
+                        ></textarea>
+                    </div>
+                    <!-- <a class="control" id="send-emoji" [routerLink]="">
+                        <i class="far fa-grin-beam"></i>
+                    </a> -->
+                    <a class="control" id="send-message" [routerLink]="" (click)="sendMessage()">
+                        <i class="fas fa-location-arrow" [ngClass]="conversation.color | toThemeClassColor:'-single'"></i></a>
+                </div>
+            </div>
+        </div>
+    </app-window>
+</ng-container>

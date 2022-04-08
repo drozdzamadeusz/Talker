@@ -1,0 +1,29 @@
+<div class="img-wrapper" [style.width.px]="width" [style.height.px]="height">
+    <ng-container *ngIf="pics.length === 1">
+        <div class="images-wrapper">
+            <div class="image-spacers img-one">
+                <img class="image" [src]='pics[0]'>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="pics.length === 2">
+        <div class="images-wrapper">
+            <div class="image-spacers img-two img-two-first">
+                <img class="image" [src]='pics[0]'>
+            </div>
+            <div class="image-spacers img-two img-two-second">
+                <img class="image" [src]='pics[1]'>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="pics.length > 2">
+        <div class="images-wrapper">
+            <div class="image-spacers img-two img-img">
+                <img class="image" [src]='pics[0]'>
+            </div>
+            <div class="image-spacers img-two img-two-second img-text">
+                <span>{{pics.length - 1}}</span>
+            </div>
+        </div>
+    </ng-container>
+</div>

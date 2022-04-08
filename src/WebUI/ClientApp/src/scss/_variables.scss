@@ -1,9 +1,49 @@
-$theme-color: rgba(33, 55, 104, 1);
+$theme-color: #6a7dfe;
 //$theme-background: linear-gradient(53deg, #213768 0%, #355aab 100%);
-$theme-background: linear-gradient(
-    53deg, #213768e0 0%, #355aabe0 100%);
+// $theme-background: linear-gradient(
+//     53deg, #213768e0 0%, #355aabe0 100%);
 $theme-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-$theme-containers-radius: 0.5rem;
-$theme-transition: all 0.2s ease-in-out;
-$theme-font: "Urbanist", "Verdana", sans-serif;
+$theme-radius: 0.5rem;
+$theme-transition: all 0.2s ease-out;
+$theme-font: 'Poppins', sans-serif;
 $theme-font-color: #353535;
+// $theme-hover-background: -webkit-linear-gradient(left, #21d4fd, #b721ff);
+$theme-hover-background:-webkit-linear-gradient(left, #21d4fd, #4257e8);
+
+$theme-item-background-color: #fff;
+
+$info-icon-color: #15aabf;
+$confirm-icon-color: $theme-color;
+$error-icon-color: #ff4949;
+
+
+$theme-background-list:(
+    0: rgb(0, 153, 255),
+    1: linear-gradient(rgb(37, 192, 225), rgb(206, 131, 42)),
+    2: linear-gradient(rgb(255, 143, 178), rgb(167, 151, 255), rgb(0, 229, 255)),
+    3: linear-gradient(rgb(255, 0, 24), rgb(255, 4, 23), rgb(255, 49, 14), rgb(255, 93, 6), rgb(255, 122, 1), rgb(255, 135, 1), rgb(255, 176, 1), rgb(217, 197, 7), rgb(121, 199, 24), rgb(1, 201, 45), rgb(1, 190, 105), rgb(1, 179, 170), rgb(11, 161, 223), rgb(63, 119, 230), rgb(114, 76, 236), rgb(138, 57, 239), rgb(138, 57, 239)),
+    4: rgb(28, 30, 33),
+    5: linear-gradient(rgb(251, 69, 222), rgb(132, 29, 213), rgb(58, 29, 138)),
+    6: linear-gradient(rgb(0, 82, 205), rgb(0, 161, 230), rgb(0, 82, 205)),
+    7: linear-gradient(rgb(0, 213, 47), rgb(0, 101, 40)),
+    8: linear-gradient(rgb(219, 64, 64), rgb(163, 36, 36)),
+    9: linear-gradient(rgb(250, 175, 0) 0%, rgb(255, 46, 46) 50%, rgb(58, 18, 255) 100%),
+    10: linear-gradient(rgb(255, 35, 154), rgb(255, 140, 33)),
+    11: linear-gradient(rgb(255, 210, 0), rgb(110, 223, 0), rgb(0, 223, 187))
+);
+
+$theme-background-single-list:(
+    0: rgb(0, 153, 255),
+    1: rgb(206, 131, 42),
+    2: rgb(0, 229, 255),
+    3: rgb(138, 57, 239),
+    4: rgb(28, 30, 33),
+    5: rgb(58, 29, 138),
+    6: rgb(0, 82, 205),
+    7: rgb(0, 101, 40),
+    8: rgb(163, 36, 36),
+    9: rgb(58, 18, 255),
+    10: rgb(255, 140, 33),
+    11: rgb(0, 223, 187)
+);
+

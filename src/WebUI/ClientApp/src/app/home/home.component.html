@@ -1,14 +1,51 @@
-<h1>Hello, world!</h1>
-<p>Welcome to your new single-page application, built with:</p>
-<ul>
-  <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-  <li><a href='https://angular.io/'>Angular</a> and <a href='http://www.typescriptlang.org/'>TypeScript</a> for client-side code</li>
-  <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-</ul>
-<p>To help you get started, we've also set up:</p>
-<ul>
-  <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-  <li><strong>Angular CLI integration</strong>. In development mode, there's no need to run <code>ng serve</code>. It runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-  <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration automatically invokes <code>ng build</code> to produce minified, ahead-of-time compiled JavaScript files.</li>
-</ul>
-<p>The <code>ClientApp</code> subdirectory is a standard Angular CLI application. If you open a command prompt in that directory, you can run any <code>ng</code> command (e.g., <code>ng test</code>), or use <code>npm</code> to install extra packages into it.</p>
+<div class="item" *ngIf="currentUser">
+    <div class="user-panel-container">
+        <div class="user-avatar">
+            <img class="user-avatar-image" src="{{currentUser.pictureUrl}}">
+        </div>
+        <div class="user-info">
+            <div class="user-nick">
+                <span class="user-nick-text">{{currentUser.firstName}} {{currentUser.lastName}}</span>
+            </div>
+            <!-- <div class="user-description" id="main-user-description">
+                <span class="user-description-text" id="user-description-text">Enter your description here...</span>
+            </div> -->
+        </div>
+        <app-mouse-menu
+            [options]="optionsItems"
+            (onMenuShown)="onMenuShown($event)"
+            (onOpionClicked)="onMenuOptionClick($event)"
+            >
+                <i class="fas fa-chevron-down"></i>
+        </app-mouse-menu>
+    </div>
+</div>
+
+<div class="item item-conversations" *ngIf="userConversations && currentUser && users; else fetchingData">
+    <!-- <div class="input-contrainer">
+        <input type="text" placeholder="Search in last conversations" />
+    </div> -->
+    <ng-container *ngFor='let c of userConversations'>
+        <app-conversation-item
+            [convId]='c.id'
+            [title]='c.name'
+            [pics]="c.users | userIdsListToArray | userIdsToUserDtos:users | userListPicsArray:currentUser.id"
+            [lastMessage]='c.lastMessage?.content'
+            [lastMessageTime]='c.lastMessage?.created'
+            [displayName]='c.users | userIdsListToArray | userIdsToUserDtos:users | userIdUserDisplayName:c.lastMessage?.createdBy:currentUser.id'
+            [unseenMessages]='c.unseenMessages'
+            (onItemClicked)="onConversationItemClicked($event)"
+        ></app-conversation-item>
+    </ng-container>
+</div>
+
+<div class="item item-controls">
+    <a [routerLink]="['/new-conversation']">
+        <i class="fas fa-plus"></i> New conversation
+    </a>
+</div>
+<ng-template #fetchingData>
+    <div class="loader-full item item-conversations">
+        <app-loading-spinner text="Connecting"></app-loading-spinner>
+    </div>
+</ng-template>

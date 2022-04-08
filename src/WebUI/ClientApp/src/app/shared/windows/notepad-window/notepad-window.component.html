@@ -1,0 +1,6 @@
+<app-window [windowHandler]="windowHandler">
+    <div header>Note {{windowHandler.id - 99999999}}</div>
+    <div body>
+        <textarea [(ngModel)]="textAreaVal"></textarea>
+    </div>
+</app-window>

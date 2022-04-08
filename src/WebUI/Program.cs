@@ -8,6 +8,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
+using Azure.Identity;
+using Microsoft.Extensions.Configuration;
 
 namespace talker.WebUI
 {
@@ -28,7 +30,7 @@ namespace talker.WebUI
                     if (context.Database.IsSqlServer())
                     {
                         context.Database.Migrate();
-                    }                   
+                    }
 
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
@@ -51,6 +53,15 @@ namespace talker.WebUI
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+               .ConfigureAppConfiguration((context, config) =>{
+                   var keyVaultEndpoint = Environment.GetEnvironmentVariable("TalkerVaultUri");
+                   if (!string.IsNullOrEmpty(keyVaultEndpoint))
+                   {
+                       config.AddAzureKeyVault(
+                               new Uri(keyVaultEndpoint),
+                               new DefaultAzureCredential());
+                   }
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

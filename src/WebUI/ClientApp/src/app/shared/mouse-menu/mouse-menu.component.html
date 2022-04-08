@@ -1,0 +1,10 @@
+<div class="user-control-buttons" (click)="showOptionsPanel($event)">
+    <ng-content></ng-content>
+    <div class="user-control-buttons-panel" [style.display]="showOptions?'block':''">
+        <ul>
+            <li *ngFor='let item of options; let i = item' (click)='onControlButtonClick($event, item.index)'>
+                <a [routerLink]=""><span class="icon"><i class={{item.iconClass}}></i></span>{{item.text}}</a>
+            </li>
+        </ul>
+    </div>
+</div>

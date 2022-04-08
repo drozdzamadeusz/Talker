@@ -235,3 +235,4 @@ _Pvt_Extensions
 /NDependOut
 /talker.ndproj
 /.mfractor
+src/WebUI/node_modules

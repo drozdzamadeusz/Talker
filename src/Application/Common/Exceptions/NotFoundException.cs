@@ -20,7 +20,7 @@ namespace talker.Application.Common.Exceptions
         }
 
         public NotFoundException(string name, object key)
-            : base($"Entity \"{name}\" ({key}) was not found.")
+            : base($"{name} was not found.")
         {
         }
     }

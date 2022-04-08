@@ -1,0 +1,46 @@
+<div class="item item-window"
+            [style.left.px]="windowHandler.rect.x"
+            [style.top.px]="windowHandler.rect.y"
+            [style.width.px]="windowHandler.rect.width"
+            [style.height.px]="windowHandler.rect.height"
+            [style.z-index]="windowHandler.order"
+            [ngClass]="{
+                'opening': windowHandler.state === EWindowState.OPENING,
+                'windowed': windowHandler.state === EWindowState.WINDOWED,
+                'resizing': windowHandler.state === EWindowState.RESIZING,
+                'maximized': windowHandler.state === EWindowState.MAXIMIZED,
+                'minimized': windowHandler.state === EWindowState.MINIMIZED,
+                'moving': windowHandler.state === EWindowState.MOVING,
+                'closing': windowHandler.state === EWindowState.CLOSING,
+                'closed': windowHandler.state === EWindowState.CLOSED}"
+            (mousedown)="onWindowDown($event)">
+    <div class="top-panel">
+        <div class="window-movable"
+            (mousedown)="onMoveWindowDown($event)"
+            (mouseup)="onMoveWindowUp($event)"
+            (dblclick)="onTopControlClicked(ITopControls.maximize)">
+            <ng-content select="[header]"></ng-content>
+        </div>
+        <div class="window-buttons main-window">
+            <div class="window-menu-area">
+                <div class="window-buttons-contianer">
+                    <ng-content select="[extra-nav]"></ng-content>
+                    <a id="button-ma" class="window-button" (click)="onTopControlClicked(ITopControls.maximize)"><i
+                            class="fas" [ngClass]="{
+                                'fa-expand-alt': windowHandler.state !== EWindowState.MAXIMIZED,
+                                'fa-compress-alt': windowHandler.state === EWindowState.MAXIMIZED}"></i></a>
+                    <a id="button-cl" class="window-button" (click)="onTopControlClicked(ITopControls.close)"><i
+                            class="fas fa-times"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="body-container">
+        <ng-content
+            select="[body]"
+        ></ng-content>
+    </div>
+    <div class="window-resizable"
+        (mousedown)="onRezizeDown($event)"
+        (mouseup)="onRezizeUp($event)"></div>
+</div>

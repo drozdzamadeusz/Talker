@@ -1,0 +1,21 @@
+@import "variables";
+
+.user-select-item{
+    display: flex;
+    color: #6a7dfe;
+    border-radius: 0.5rem;
+    background-color: #6a7efe3b;
+    padding: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin: 0.2rem;
+    
+    .user-select-text {
+        white-space: nowrap;
+    }
+    
+    .user-select-control {
+        padding-left: 0.4rem;
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,23 @@
+<div class="user-panel-container" (click)='onItemClick()'>
+    <div class="user-avatar">
+        <app-avatar
+            width="42"
+            height="42"
+            [pics]="pictureUrl | toArray"
+        ></app-avatar>
+    </div>
+    <div class="user-info">
+        <div class="user-nick">
+            <span class="user-nick-text">{{text}}</span>
+        </div>
+        <div class="user-description" id="main-user-description">
+            <span *ngIf="description"
+                class="user-description-text"
+                id="user-description-text"
+                >{{description}}</span>
+        </div>
+    </div>
+    <ng-content></ng-content>
+    <div class="user-status-changer user-control-buttons">
+    </div>
+</div>

@@ -1,0 +1,13 @@
+<h5 mat-dialog-title>{{data.header}}</h5>
+<form (submit)="onSave()" action="#">
+    <div mat-dialog-content class="dialog-content">
+        <div style="margin: 0.5rem">
+            <input [(ngModel)]="data.text" cdkFocusRegionstart name="text"/>
+        </div>
+    </div>
+    <div mat-dialog-actions align="end">
+        <button class="button secondary" style="width: 5rem;" mat-button mat-dialog-close (click)="onClose()"
+            tabIndex="-1">Close</button>
+        <button class="button primary" style="width: 5rem;" type="submit" mat-button (click)="onSave()">Save</button>
+    </div>
+</form>

@@ -25,42 +25,26 @@ namespace talker.Application.Messages.Commands.SendMessage
         {
 
             private readonly IApplicationDbContext _context;
-            private readonly ICurrentUserService _currentUserService;
-            private readonly IIdentityService _identityService;
             private readonly ILogger<SendMessageCommandHandler> _logger;
+            private readonly IMediator _mediator;
 
-            public SendMessageCommandHandler(IApplicationDbContext context, ICurrentUserService currentUserService, IIdentityService identityService, ILogger<SendMessageCommandHandler> logger)
+            public SendMessageCommandHandler(IApplicationDbContext context, ILogger<SendMessageCommandHandler> logger, IMediator mediator)
             {
                 _context = context;
-                _currentUserService = currentUserService;
-                _identityService = identityService;
                 _logger = logger;
+                _mediator = mediator;
             }
 
             public async Task<int> Handle(SendMessageCommand request, CancellationToken cancellationToken)
             {
-                var userId = _currentUserService.UserId ?? string.Empty;
-                ApplicationUserDto currentUser;
-
-                if (!string.IsNullOrEmpty(userId))
-                {
-                    currentUser = await _identityService.GetUserAsync(userId);
-                }
-                else
-                {
-                    throw new ForbiddenAccessException();
-                }
-
+                var currentUserId = (await _mediator.Send(new GetCurrentUserQuery())).Id;
 
                 var conversation = await _context.Conversations.Where(c => c.Id == request.ConversationId)
                                             .SingleOrDefaultAsync(cancellationToken);
 
-                conversation.UsersIds = await _context.UserDictionary.Where(e => e.ConversationId == conversation.Id).ToListAsync(cancellationToken);
+                var userIds = await _context.UsersConversations.Where(e => e.ConversationId == conversation.Id && !e.IsDeleted).ToListAsync(cancellationToken);
 
-                _logger.LogWarning(JsonSerializer.Serialize(conversation));
-       
-
-                if (HelperMethods.CheckIfUserBelongsToConversation(conversation, userId))
+                if (HelperMethods.CheckIfUserBelongsToConversation(userIds, currentUserId))
                 {
                     var entity = new Message
                     {
@@ -75,7 +59,7 @@ namespace talker.Application.Messages.Commands.SendMessage
                 }
 
                 throw new InvalidOperation(new List<ValidationFailure> {
-                    new ValidationFailure("Message sending failure", "You are not a member of this conversation.")
+                    new ValidationFailure("Message failure", "You are not a member of the conversation.")
                 });
             }
         }

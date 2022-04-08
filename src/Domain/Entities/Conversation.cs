@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using talker.Domain.Common;
+using talker.Domain.Enums;
 
 namespace talker.Domain.Entities
 {
@@ -9,6 +10,10 @@ namespace talker.Domain.Entities
 
         public string Name { get; set; }
 
-        public IList<UserDictionary> UsersIds { get; set; } = new List<UserDictionary>();
+        public ConversationColor Color { get; set; }
+
+        public IList<UserConversation> UsersIds { get; set; } = new List<UserConversation>();
+
+        public IList<Message> Messages { get; set; } = new List<Message>();
     }
 }

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace talker.Infrastructure.Persistence
 {
@@ -31,14 +32,44 @@ namespace talker.Infrastructure.Persistence
             _dateTime = dateTime;
         }
 
-        public DbSet<TodoItem> TodoItems { get; set; }
-
-        public DbSet<TodoList> TodoLists { get; set; }
         public DbSet<Conversation> Conversations { get; set; }
 
         public DbSet<Message> Messages { get; set; }
 
-        public DbSet<UserDictionary> UserDictionary { get; set; }
+        public DbSet<UserConversation> UsersConversations { get; set; }
+
+        public DbSet<UserMessage> UsersMessages { get; set; }
+
+        public async Task<int> SaveChangesAsUserAsync(string userId, CancellationToken cancellationToken = new CancellationToken())
+        {
+
+            foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.CreatedBy = userId;
+                        entry.Entity.Created = _dateTime.Now;
+                        break;
+
+                    case EntityState.Deleted:
+                        entry.State = EntityState.Modified;
+                        entry.Entity.IsDeleted = true;
+                        goto case EntityState.Modified;
+
+                    case EntityState.Modified:
+                        entry.Entity.LastModifiedBy = userId;
+                        entry.Entity.LastModified = _dateTime.Now;
+                        break;
+                }
+            }
+
+            var result = await base.SaveChangesAsync(cancellationToken);
+
+            await DispatchEvents();
+
+            return result;
+        }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
@@ -50,6 +81,11 @@ namespace talker.Infrastructure.Persistence
                         entry.Entity.CreatedBy = _currentUserService.UserId;
                         entry.Entity.Created = _dateTime.Now;
                         break;
+
+                    case EntityState.Deleted:
+                        entry.State = EntityState.Modified;
+                        entry.Entity.IsDeleted = true;
+                        goto case EntityState.Modified;
 
                     case EntityState.Modified:
                         entry.Entity.LastModifiedBy = _currentUserService.UserId;

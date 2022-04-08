@@ -1,3 +1,4 @@
+import { SharedModule } from './../app/shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginMenuComponent } from './login-menu/login-menu.component';
@@ -11,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     CommonModule,
     HttpClientModule,
+    SharedModule,
     RouterModule.forChild(
       [
         { path: ApplicationPaths.Register, component: LoginComponent },
@@ -19,8 +21,9 @@ import { HttpClientModule } from '@angular/common/http';
         { path: ApplicationPaths.LoginFailed, component: LoginComponent },
         { path: ApplicationPaths.LoginCallback, component: LoginComponent },
         { path: ApplicationPaths.LogOut, component: LogoutComponent },
-        { path: ApplicationPaths.LoggedOut, component: LogoutComponent },
-        { path: ApplicationPaths.LogOutCallback, component: LogoutComponent }
+        { path: ApplicationPaths.LoggedOut,  redirectTo: 'start', pathMatch: 'full' },
+        { path: ApplicationPaths.LogOutCallback, component: LogoutComponent },
+        //{ path: ApplicationPaths.LoggedOut, redirectTo: 'start', pathMatch: 'full' },
       ]
     )
   ],

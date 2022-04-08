@@ -1,0 +1,31 @@
+<h5 mat-dialog-title>Add user</h5>
+<div mat-dialog-content class="dialog-content">
+    <div class="item-conversations">
+        <div class="input-contrainer">
+            <input [formControl]="queryField" type="text" placeholder='Search in Talker' autofocus/>
+            <span><i class="fas fa-question-circle"></i> Pattern: Name "email" Surname</span>
+        </div>
+        <ng-container *ngFor='let u of searchResult'>
+            <app-user-item
+                [userId]='u.id'
+                [pictureUrl]='u.pictureUrl'
+                text='{{u.firstName}} {{u.lastName}}'
+                (onItemClicked)="onUserItemClicked($event)"
+            ></app-user-item>
+        </ng-container>
+    </div>
+    <div class="item-result">
+        <div class="checked-items" *ngIf="data.selectedUsers.length > 0">
+            <h7 class="inform" style="width: 100%">Already in group:</h7>
+            <ng-container *ngFor="let u of data.selectedUsers">
+                <app-user-select-item
+                    [user]='u'
+                    controls='false'
+                ></app-user-select-item>
+            </ng-container>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions align="end">
+    <button class="button secondary" style="width: 5rem;" mat-button mat-dialog-close (click)="onClose()" tabIndex="-1">Close</button>
+</div>

@@ -21,7 +21,6 @@
   <ItemGroup>
     <Folder Include="Conversations\EventHandlers\" />
     <Folder Include="Messages\EventHandlers\" />
-    <Folder Include="Messages\Queries\" />
     <Folder Include="Users\Commands\" />
     <Folder Include="Users\EventHandlers\" />
   </ItemGroup>

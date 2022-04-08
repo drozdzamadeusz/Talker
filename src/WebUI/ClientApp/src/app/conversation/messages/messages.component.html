@@ -1,0 +1,18 @@
+<div *ngIf="messages && messages.length < 1" class="no-messages">
+    <i class="fas fa-comment"></i><span class="inform">No conversations yet</span>
+ </div>
+<div class="messages" [ngClass]="color | toThemeClassColor" #messagesContainer *ngIf="messages; else fetchingData;"
+    (scroll)="onScroll($event)">
+    <div class="loader-old" *ngIf="fetchingOldMessages">
+        <app-loading-spinner text="Loading previous messages"></app-loading-spinner>
+    </div>
+    <ng-container *ngFor="let m of messages">
+        <app-message [message]="m" [mine]="m.createdBy === currentUserId" [type]="m.type"
+            (messageLoadedEvent)="messageLoadedEvent($event)"></app-message>
+    </ng-container>
+</div>
+<ng-template #fetchingData>
+    <div class="loader-full">
+        <app-loading-spinner></app-loading-spinner>
+    </div>
+</ng-template>

@@ -1,0 +1,19 @@
+<h5 mat-dialog-title>Members</h5>
+<div mat-dialog-content class="dialog-content">
+    <ng-container *ngFor='let u of data'>
+        <app-user-item
+            [userId]='u.id'
+            [pictureUrl]='u.pictureUrl'
+            [text]='u.text'
+            [description]='u.description'
+        ><app-mouse-menu *ngIf="u.options.length > 0"
+            [options]="u.options"
+            (onOpionClicked)="onMenuOptionClick($event, u.id)">
+                <i class="fas fa-chevron-down menu-mouse-button"></i>
+            </app-mouse-menu>
+        </app-user-item>
+    </ng-container>
+</div>
+<div mat-dialog-actions align="end">
+    <button class="button secondary" style="width: 5rem;" mat-button mat-dialog-close (click)="onClose()" tabIndex="-1">Close</button>
+</div>

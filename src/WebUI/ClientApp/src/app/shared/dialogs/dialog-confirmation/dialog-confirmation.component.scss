@@ -1,0 +1,38 @@
+@import "variables";
+
+.dialog-content {
+    display: flex;
+
+    .dialog-icon {
+        margin-right: 1.5rem;
+        margin-left: 0.5rem;
+
+        > i {
+            font-size: 4rem;
+            color: $confirm-icon-color;
+        }
+    }
+
+    .dialog-text {
+        display: flex;
+        align-items: baseline;
+        max-width: 20rem;
+        margin-right: 1rem;
+
+        span {
+            font-size: 1rem;
+            line-height: 2rem;
+        }
+    }
+    .error-icon {
+        > i {
+            color: $error-icon-color;
+        }
+    }
+
+    .info-icon {
+        > i {
+            color: $info-icon-color;
+        }
+    }
+}

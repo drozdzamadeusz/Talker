@@ -1,0 +1,64 @@
+@import "variables";
+
+.loading-spinner {
+  display: flex;
+
+  &-animation {
+    display: inline-block;
+    width: 3.4rem;
+    height: 3.4rem;
+  }
+
+  &-animation:after {
+    content: " ";
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    margin: 0.5rem;
+    border-radius: 50%;
+    border: 0.23rem solid $theme-color;
+    border-color: $theme-color transparent $theme-color transparent;
+    animation: loading-animation 1.2s linear infinite;
+  }
+  &-text {
+    display: flex;
+    align-items: center;
+    margin-left: 0.5rem;
+    min-width:5rem;
+    white-space: nowrap;
+
+    span {
+      font-weight: 600;
+      &:after {
+        overflow: hidden;
+        display: inline-block;
+        vertical-align: bottom;
+        animation: ellipsis steps(4, end) 0.8s infinite;
+        content: "\2026";
+        width: 0px;
+      }
+    }
+  }
+}
+
+/* animations */
+@keyframes loading-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ellipsis {
+  to {
+    width: 0.8rem;
+  }
+}
+
+@-webkit-keyframes ellipsis {
+  to {
+    width: 0.8rem;
+  }
+}

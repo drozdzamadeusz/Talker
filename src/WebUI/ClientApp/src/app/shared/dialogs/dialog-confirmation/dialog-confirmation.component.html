@@ -1,0 +1,55 @@
+<ng-container *ngIf='data.type === "info"; then infoDialog'></ng-container>
+<ng-container *ngIf='data.type === "confirm"; then confirmDialog'></ng-container>
+<ng-container *ngIf='data.type === "error"; then errorDialog'></ng-container>
+
+<ng-template #infoDialog>
+    <h5 mat-dialog-title>Information</h5>
+    <mat-dialog-content class="mat-typography">
+        <div class="dialog-content">
+            <div class="dialog-icon info-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="dialog-text">
+                <span>{{data.text}}</span>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button class="button" style="width: 5rem;" mat-button mat-dialog-close>Close</button>
+    </mat-dialog-actions>
+</ng-template>
+
+<ng-template #confirmDialog>
+    <h5 mat-dialog-title>Confirm your action</h5>
+    <mat-dialog-content class="mat-typography">
+        <div class="dialog-content">
+            <div class="dialog-icon">
+                <i class="fas fa-question-circle"></i>
+            </div>
+            <div class="dialog-text">
+                <span>{{data.text}}</span>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button class="button" style="width: 5rem;" mat-button mat-dialog-close>Close</button>
+        <button class="button primary" style="width: 5rem;" mat-button [mat-dialog-close]="true" cdkFocusInitial>Confirm</button>
+    </mat-dialog-actions>
+</ng-template>
+
+<ng-template #errorDialog>
+    <h5 mat-dialog-title>Something went wrong</h5>
+    <mat-dialog-content class="mat-typography">
+        <div class="dialog-content">
+            <div class="dialog-icon error-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="dialog-text">
+                <span [innerHTML]="data.text"></span>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button class="button" style="width: 5rem;" mat-button mat-dialog-close>Close</button>
+    </mat-dialog-actions>
+</ng-template>

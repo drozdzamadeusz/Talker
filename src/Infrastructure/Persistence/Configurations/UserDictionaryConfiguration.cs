@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace talker.Infrastructure.Persistence.Configurations
 {
-    public class UserDictionaryConfiguration : IEntityTypeConfiguration<UserDictionary>
+    public class UserDictionaryConfiguration : IEntityTypeConfiguration<UserConversation>
     {
-        public void Configure(EntityTypeBuilder<UserDictionary> builder)
+        public void Configure(EntityTypeBuilder<UserConversation> builder)
         {
         }
     }

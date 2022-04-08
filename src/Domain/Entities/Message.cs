@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using talker.Domain.Common;
+using talker.Domain.Enums;
 
 namespace talker.Domain.Entities
 {
@@ -15,6 +12,8 @@ namespace talker.Domain.Entities
 
         public string Content { get; set; }
 
-        public IList<UserDictionary> SeenBy { get; set; } = new List<UserDictionary>();
+        public MessageType Type { get; set; }
+
+        public IList<UserMessage> SeenBy { get; set; } = new List<UserMessage>();
     }
 }

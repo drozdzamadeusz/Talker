@@ -14,7 +14,7 @@ import { LoginActions, QueryParameterNames, ApplicationPaths, ReturnUrlType } fr
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  public message = new BehaviorSubject<string>(null);
+  public message$ = new BehaviorSubject<string>(null);
 
   constructor(
     private authorizeService: AuthorizeService,
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
         break;
       case LoginActions.LoginFailed:
         const message = this.activatedRoute.snapshot.queryParamMap.get(QueryParameterNames.Message);
-        this.message.next(message);
+        this.message$.next(message);
         break;
       case LoginActions.Profile:
         this.redirectToProfile();
@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
   private async login(returnUrl: string): Promise<void> {
     const state: INavigationState = { returnUrl };
     const result = await this.authorizeService.signIn(state);
-    this.message.next(undefined);
+    this.message$.next(undefined);
     switch (result.status) {
       case AuthenticationResultStatus.Redirect:
         break;
@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
         await this.navigateToReturnUrl(this.getReturnUrl(result.state));
         break;
       case AuthenticationResultStatus.Fail:
-        this.message.next(result.message);
+        this.message$.next(result.message);
         break;
     }
   }

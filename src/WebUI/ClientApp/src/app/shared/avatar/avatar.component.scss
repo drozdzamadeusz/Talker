@@ -1,0 +1,85 @@
+.img-two {
+}
+
+:host {
+    display: flex;
+}
+
+.img-wrapper {
+    display: flex;
+    /* overflow: hidden; */
+    position: relative;
+    padding: 0.1rem;
+}
+
+.img-wrapper.image-spacers {
+    display: flex;
+}
+
+.img-wrapper .image-spacers.img-one {
+    border-radius: 50%;
+    overflow: hidden;
+}
+.img-wrapper .image-spacers.img-one img {
+    height: 100%;
+    width: 100%;
+}
+.img-wrapper .image-spacers {
+    outline: 3px solid #ffffff85;
+}
+.img-wrapper .image-spacers.img-two img {
+    height: 100%;
+    width: 100%;
+}
+
+.image-spacers {
+    position: absolute;
+}
+
+.image-spacers.img-two {
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.image-spacers.img-two.img-two-first {
+    height: 60%;
+    width: 60%;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.image-spacers.img-two.img-two-second {
+    width: 60%;
+    height: 60%;
+    right: 0;
+    top: 0;
+}
+
+.images-wrapper {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.img-img {
+    height: 61%;
+    width: 61%;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.image-spacers.img-text {
+    background: #aaa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-spacers.img-text > span {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    padding-right: 1px;
+}

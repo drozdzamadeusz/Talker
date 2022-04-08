@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace talker.WebUI.Filters
 {
@@ -21,6 +22,7 @@ namespace talker.WebUI.Filters
                 { typeof(NotFoundException), HandleNotFoundException },
                 { typeof(UnauthorizedAccessException), HandleUnauthorizedAccessException },
                 { typeof(ForbiddenAccessException), HandleForbiddenAccessException },
+                { typeof(InvalidOperation), HandleInvalidOperationException },
             };
         }
 
@@ -63,6 +65,22 @@ namespace talker.WebUI.Filters
             context.ExceptionHandled = true;
         }
 
+        private void HandleInvalidOperationException(ExceptionContext context)
+        {
+            var exception = context.Exception as InvalidOperation;
+
+            var details = new ValidationProblemDetails(exception.Errors)
+            {
+                Status = StatusCodes.Status403Forbidden,
+                Title = exception.Message,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.3",
+            };
+
+            context.Result = new BadRequestObjectResult(details);
+
+            context.ExceptionHandled = true;
+        }
+
         private void HandleInvalidModelStateException(ExceptionContext context)
         {
             var details = new ValidationProblemDetails(context.ModelState)
@@ -70,7 +88,10 @@ namespace talker.WebUI.Filters
                 Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1"
             };
 
-            context.Result = new BadRequestObjectResult(details);
+            context.Result = new ObjectResult(details)
+            {
+                StatusCode = StatusCodes.Status401Unauthorized
+            };
 
             context.ExceptionHandled = true;
         }

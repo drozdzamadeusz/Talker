@@ -1,0 +1,51 @@
+<ng-container *ngIf='user'>
+    <ng-container *ngIf="mine && type == 0 else notMine;">
+        <li class="message-container mine">
+            <div class="wrapper">
+                <span class="message-content">
+                    <span class="fill"></span>
+                    <span class="text"
+                        (click)="showDetails($event)"
+                        [title]="message.created | date: 'M/d/yy, h:mm a'"
+                        >{{message.content}}</span>
+                </span>
+            </div>
+            <!-- <div class="image"><img [src]='user.pictureUrl'></div> -->
+        </li>
+    </ng-container>
+</ng-container>
+
+<ng-template #notMine>
+    <ng-container *ngIf="!mine && type == 0; else event;">
+        <li class="message-container">
+            <div class="wrapper">
+                <span class="info">
+                    <span>{{user.firstName}} {{user.lastName}}</span>
+                </span>
+                <span class="message-content">
+                    <span class="text"
+                        (click)="showDetails($event)"
+                        [title]="message.created | date: 'M/d/yy, h:mm a'"
+                        >{{message.content}}</span>
+                    <span class="fill"></span>
+                </span>
+            </div>
+            <div class="image"><img [src]='user.pictureUrl'></div>
+        </li>
+    </ng-container>
+</ng-template>
+
+<ng-template #event>
+    <ng-container *ngIf="type && type != 0">
+        <li class="message-container event">
+            <div class="wrapper">
+                <span class="message-content">
+                    <span class="text"
+                        [title]="message.created | date: 'M/d/yy, h:mm a'"
+                        (click)="showDetails($event)"
+                        >{{user.firstName}} {{user.lastName}} {{message.content}}</span>
+                </span>
+            </div>
+        </li>
+    </ng-container>
+</ng-template>
