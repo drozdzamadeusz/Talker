@@ -40,7 +40,7 @@ namespace talker.Infrastructure
 
             services.AddIdentityServer(options =>
             {
-                options.IssuerUri = "80.211.143.128:5001"; // comment if development
+                options.IssuerUri = "80.211.143.128:5101"; // comment if development
 
             }).AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
