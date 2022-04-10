@@ -25,6 +25,7 @@ namespace talker.Infrastructure.Persistence
                 FirstName = "Amadro",
                 LastName = "Ordama",
                 PictureUrl = "../assets/t.png",
+                EmailConfirmed = true,
             };
 
             if (userManager.Users.All(u => u.UserName != administrator.UserName))
@@ -41,6 +42,7 @@ namespace talker.Infrastructure.Persistence
                 FirstName = "Leoksandra",
                 LastName = "Sokół",
                 PictureUrl = "https://www.gravatar.com/avatar/b9b9074d4d7af0c2399fb173ccb431c4?d=retro&s=200",
+                EmailConfirmed = true,
             };
 
             if (userManager.Users.All(u => u.UserName != user.UserName))
@@ -55,6 +57,7 @@ namespace talker.Infrastructure.Persistence
                 FirstName = "Jan",
                 LastName = "Nowak",
                 PictureUrl = "https://www.gravatar.com/avatar/49b4cbe775877ab251e131ef0ff3100f?d=retro&s=200",
+                EmailConfirmed = true,
             };
 
             if (userManager.Users.All(u => u.UserName != user1.UserName))
@@ -69,6 +72,7 @@ namespace talker.Infrastructure.Persistence
                 FirstName = "John",
                 LastName = "Doe",
                 PictureUrl = "https://www.gravatar.com/avatar/f19badc9694d312d1900d332fafd3ebd?d=retro&s=200",
+                EmailConfirmed = true,
             };
 
             if (userManager.Users.All(u => u.UserName != user2.UserName))
