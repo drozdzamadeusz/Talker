@@ -65,7 +65,7 @@ namespace talker.WebUI
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    //webBuilder.UseUrls("http://localhost", "https://localhost");
+                    webBuilder.UseUrls("http://0.0.0.0:5000", "https://0.0.0.0:5001");
                 });
     }
 }
